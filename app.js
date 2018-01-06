@@ -7,7 +7,7 @@ const port = process.env.PORT || 5000
 const jason = require('./app.json')
 app.get("/jason", function(req, res) {
   // fill in the agent url with the current server url
-  jason.$jason.head.agents.ws.url = req.protocol + '://' + req.get('host') + req.originalUrl;
+  jason.$jason.head.agents.ws.url = req.protocol + '://' + req.get('host');
   res.json(jason)
 })
 app.use(express.static(__dirname + "/"))

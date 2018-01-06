@@ -12,7 +12,7 @@ var send = function(message) {
   ws.send(message);
 }
 var onmessage = function(message) {
-  if (typeof message !== "function") {
+  if (typeof message !== "object") {  // ignore pings
     if (window.$agent) {
       $agent.trigger("onmessage", message)
     } else {
