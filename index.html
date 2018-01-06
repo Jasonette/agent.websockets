@@ -2,23 +2,6 @@
 <script>
 var host = location.origin.replace(/^http/, 'ws')
 var ws = new WebSocket(host)
-var received = function(message) {
-  if (typeof message !== "object") {  // ignore pings
-    if (window.$agent) {
-      $agent.trigger("onmessage", message)
-    } else {
-      console.log("Message: ", message);
-      document.write(message + "<br>");
-    }
-  }
-}
-var connected = function() {
-  if (window.$agent) {
-    $agent.trigger("onconnect")
-  } else {
-    console.log('websocket connected ...')
-  }
-}
 ws.onopen = function () {
   connected();
 }
@@ -28,5 +11,40 @@ ws.onmessage = function (ev) {
 var send = function(message) {
   ws.send(message);
 }
+
+var received;
+var connected;
+
+if (window.$agent) {
+  // For Jasonette Agents
+  received = function(message) {
+    if (typeof message !== "object") {  // ignore pings
+      $agent.trigger("onmessage", message)
+    }
+  }
+  connected = function() {
+    $agent.trigger("onconnect")
+  }
+} else {
+  // For regular web app
+  received = function(message) {
+    if (typeof message !== "object") {  // ignore pings
+      document.querySelector("#messages").write(message + "<br>");
+    }
+  }
+  connected = function() {
+    document.querySelector("#messages").write("websocket connected...<br>");
+  }
+  document.addEventListener("DOMContentLoaded", function(e) {
+    document.querySelector("#send").onclick = function(c) {
+      send(document.querySelector("#message").value)
+    }
+  })
+}
+
+
 </script>
+<input type='text' placeholder='enter message' id='message'>
+<button id='send'>Send</button>
+<div id='messages'></div>
 </html>
