@@ -37,19 +37,26 @@
       },
       "templates": {
         "body": {
+          "style": {
+            "border": "none"
+          },
           "sections": [{
             "items": {
               "{{#each $cache.messages}}": {
                 "type": "horizontal",
+                "style": {
+                  "padding": "10"
+                },
                 "components": [{
                   "type": "label",
                   "text": "{{this}}",
                   "style": {
                     "corner_radius": "5",
-                    "background": "#ff0000",
+                    "background": "#3787f6",
                     "color": "#ffffff",
                     "font": "HelveticaNeue",
-                    "size": "12",
+                    "size": "16",
+                    "padding": "8",
                     "width": "80%"
                   }
                 }, {
