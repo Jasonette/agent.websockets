@@ -8,6 +8,15 @@
         }
       },
       "actions": {
+        "$load": {
+          "type": "$cache.set",
+          "options": {
+            "messages": []
+          },
+          "success": {
+            "type": "$render"
+          }
+        },
         "onmessage": {
           "type": "$cache.set",
           "options": {
