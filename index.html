@@ -1,0 +1,29 @@
+<html>
+<script>
+var host = location.origin.replace(/^http/, 'ws')
+var ws = new WebSocket(host)
+ws.onopen = function () {
+  onconnect();
+}
+ws.onmessage = function (ev) {
+  onmessage(ev.data);
+}
+var send = function(message) {
+  ws.send(message);
+}
+var onmessage = function(message) {
+  if (window.$agent) {
+    $agent.trigger("onmessage", message)
+  } else {
+    console.log("Message: ", message);
+  }
+}
+var onconnect = function() {
+  if (window.$agent) {
+    $agent.trigger("onconnect")
+  } else {
+    console.log('websocket connected ...')
+  }
+}
+</script>
+</html>

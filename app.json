@@ -1,0 +1,70 @@
+{
+  "$jason": {
+    "head": {
+      "title": "Websocket Chat",
+      "agents": {
+        "ws": {
+          "url": ""
+        }
+      },
+      "actions": {
+        "onmessage": {
+          "type": "$cache.set",
+          "options": {
+            "messages": "{{$cache.messages.concat($jason)}}"
+          },
+          "success": {
+            "type": "$render"
+          }
+        },
+        "send": {
+          "type": "$agent.request",
+          "options": {
+            "id": "ws",
+            "method": "send",
+            "params": ["{{$get.message}}"]
+          }
+        }
+      },
+      "templates": {
+        "body": {
+          "sections": [{
+            "items": {
+              "{{#each $cache.messages}}": {
+                "type": "horizontal",
+                "components": [{
+                  "type": "label",
+                  "text": "{{this}}",
+                  "style": {
+                    "corner_radius": "5",
+                    "background": "#ff0000",
+                    "color": "#ffffff",
+                    "font": "HelveticaNeue",
+                    "size": "12",
+                    "width": "80%"
+                  }
+                }, {
+                  "type": "space"
+                }]
+              }
+            }
+          }],
+          "footer": {
+            "input": {
+              "textfield": {
+                "name": "message",
+                "placeholder": "enter a message"
+              },
+              "right": {
+                "text": "Send",
+                "action": {
+                  "trigger": "send"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
