@@ -12,10 +12,12 @@ var send = function(message) {
   ws.send(message);
 }
 var onmessage = function(message) {
-  if (window.$agent) {
-    $agent.trigger("onmessage", message)
-  } else {
-    console.log("Message: ", message);
+  if (typeof message !== "function") {
+    if (window.$agent) {
+      $agent.trigger("onmessage", message)
+    } else {
+      console.log("Message: ", message);
+    }
   }
 }
 var onconnect = function() {
