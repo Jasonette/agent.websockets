@@ -40,18 +40,22 @@
           "style": {
             "border": "none"
           },
+          "header": {
+            "title": "WebSocket Chat Agent"
+          },
           "sections": [{
             "items": {
               "{{#each $cache.messages}}": {
                 "type": "horizontal",
                 "style": {
-                  "padding": "10"
+                  "align": "bottom",
+                  "padding": "5"
                 },
                 "components": [{
                   "type": "label",
                   "text": "{{this}}",
                   "style": {
-                    "corner_radius": "5",
+                    "corner_radius": "10",
                     "background": "#3787f6",
                     "color": "#ffffff",
                     "font": "HelveticaNeue",
