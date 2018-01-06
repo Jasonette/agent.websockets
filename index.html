@@ -2,16 +2,7 @@
 <script>
 var host = location.origin.replace(/^http/, 'ws')
 var ws = new WebSocket(host)
-ws.onopen = function () {
-  onconnect();
-}
-ws.onmessage = function (ev) {
-  onmessage(ev.data);
-}
-var send = function(message) {
-  ws.send(message);
-}
-var onmessage = function(message) {
+var received = function(message) {
   if (typeof message !== "object") {  // ignore pings
     if (window.$agent) {
       $agent.trigger("onmessage", message)
@@ -21,12 +12,21 @@ var onmessage = function(message) {
     }
   }
 }
-var onconnect = function() {
+var connected = function() {
   if (window.$agent) {
     $agent.trigger("onconnect")
   } else {
     console.log('websocket connected ...')
   }
+}
+ws.onopen = function () {
+  connected();
+}
+ws.onmessage = function (ev) {
+  received(ev.data);
+}
+var send = function(message) {
+  ws.send(message);
 }
 </script>
 </html>
