@@ -29,11 +29,15 @@ if (window.$agent) {
   // For regular web app
   received = function(message) {
     if (typeof message !== "object") {  // ignore pings
-      document.querySelector("#messages").write(message + "<br>");
+      var line = document.createElement("pre");
+      line.innerHTML = message;
+      document.querySelector("#messages").appendChild(line);
     }
   }
   connected = function() {
-    document.querySelector("#messages").write("websocket connected...<br>");
+    var line = document.createElement("pre");
+    line.innerHTML = "websocket connected ...";
+    document.querySelector("#messages").appendChild(line);
   }
   document.addEventListener("DOMContentLoaded", function(e) {
     document.querySelector("#send").onclick = function(c) {
