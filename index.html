@@ -15,37 +15,32 @@ var send = function(message) {
 var received;
 var connected;
 
-if (window.$agent) {
-  // For Jasonette Agents
-  received = function(message) {
-    if (typeof message !== "object") {  // ignore pings
+// For Jasonette Agents
+var received = function(message) {
+  if (typeof message !== "object") {  // ignore pings
+    if (window.$agent) {
       $agent.trigger("onmessage", message)
-    }
-  }
-  connected = function() {
-    $agent.trigger("onconnect")
-  }
-} else {
-  // For regular web app
-  received = function(message) {
-    if (typeof message !== "object") {  // ignore pings
+    } else {
       var line = document.createElement("pre");
       line.innerHTML = message;
       document.querySelector("#messages").appendChild(line);
     }
   }
-  connected = function() {
+}
+var connected = function() {
+  if (window.$agent) {
+    $agent.trigger("onconnect")
+  } else {
     var line = document.createElement("pre");
     line.innerHTML = "websocket connected ...";
     document.querySelector("#messages").appendChild(line);
   }
-  document.addEventListener("DOMContentLoaded", function(e) {
-    document.querySelector("#send").onclick = function(c) {
-      send(document.querySelector("#message").value)
-    }
-  })
 }
-
+document.addEventListener("DOMContentLoaded", function(e) {
+  document.querySelector("#send").onclick = function(c) {
+    send(document.querySelector("#message").value)
+  }
+})
 
 </script>
 <input type='text' placeholder='enter message' id='message'>
