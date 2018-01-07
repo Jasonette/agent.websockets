@@ -13,3 +13,7 @@ Since this example requires a server, you can try the deployed versiont at [http
 First check that the websocket chat works between multiple different browsers.
 
 Then open [app.json](http://wsjason.herokuapp.com/app.json) on Jasonette to make it run as a Jasonette native app.
+
+# To try on your own server
+
+Open app.json and just change the `$jason.head.agents.ws.url` to your agent HTML URL.
